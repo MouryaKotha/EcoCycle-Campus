@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rewards | EcoCycle Campus</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="rewards">
+  <div class="app-container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          EcoCycle
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-target="dashboard">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Dashboard
+        </a>
+        <a href="kiosks.html" class="nav-item" data-target="kiosks">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Kiosks & Deposit
+        </a>
+        <a href="rewards.html" class="nav-item" data-target="rewards">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path></svg>
+          Rewards
+        </a>
+        <a href="impact.html" class="nav-item" data-target="impact">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Impact
+        </a>
+        <a href="history.html" class="nav-item" data-target="history">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          History
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="profile.html" class="nav-item" data-target="profile">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          Profile
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-content">
+      <header class="top-header">
+        <h1 class="header-title">Cafeteria Rewards</h1>
+        <div class="header-actions">
+          <div class="points-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span class="user-balance">0</span> pts
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <div class="mb-8">
+          <h2 class="mb-4">Available Vouchers</h2>
+          <div class="grid grid-2" id="vouchers-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <div>
+          <h2 class="mb-4">My Active Vouchers</h2>
+          <div class="grid grid-3" id="my-vouchers-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <a href="dashboard.html" class="bottom-nav-item" data-target="dashboard">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Home</span>
+      </a>
+      <a href="kiosks.html" class="bottom-nav-item" data-target="kiosks">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <span>Scan</span>
+      </a>
+      <a href="rewards.html" class="bottom-nav-item" data-target="rewards">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path></svg>
+        <span>Rewards</span>
+      </a>
+      <a href="profile.html" class="bottom-nav-item" data-target="profile">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span>Profile</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAvailableVouchers();
+      renderMyVouchers();
+    });
+
+    function renderAvailableVouchers() {
+      const grid = document.getElementById('vouchers-grid');
+      grid.innerHTML = '';
+      const balance = store.getBalance();
+
+      REWARD_VOUCHERS.forEach(v => {
+        const canAfford = balance >= v.pointsCost;
+        grid.innerHTML += `
+          <div class="card flex justify-between items-center" style="border-left: 4px solid ${v.color};">
+            <div>
+              <h3 style="margin-bottom: 0.25rem;">${v.name}</h3>
+              <p class="text-sm font-bold text-muted">${v.pointsCost} Points</p>
+            </div>
+            <button class="btn btn-primary" ${!canAfford ? 'disabled' : ''} onclick="handleRedeem('${v.id}')">Redeem</button>
+          </div>
+        `;
+      });
+    }
+
+    function renderMyVouchers() {
+      const grid = document.getElementById('my-vouchers-grid');
+      const vouchers = store.getVouchers();
+      grid.innerHTML = '';
+
+      if (vouchers.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path></svg>
+            <p>You haven't redeemed any vouchers yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      vouchers.forEach(v => {
+        const def = REWARD_VOUCHERS.find(d => d.id === v.defId);
+        grid.innerHTML += `
+          <div class="card text-center" style="background: var(--dark-charcoal); color: white;">
+            <div style="background: ${def.color}; width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path></svg>
+            </div>
+            <h4 class="mb-2">${v.name}</h4>
+            <p class="text-sm mb-4" style="color: rgba(255,255,255,0.7);">ID: ${v.id}</p>
+            <div style="background: rgba(255,255,255,0.1); padding: 0.5rem; border-radius: var(--radius-sm); font-size: 0.75rem;">
+              Show this to cashier
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function handleRedeem(voucherId) {
+      if (confirm('Are you sure you want to redeem this voucher? Points will be deducted immediately.')) {
+        const result = store.redeemVoucher(voucherId);
+        if (result.success) {
+          showToast('Voucher redeemed successfully!');
+          updateGlobalUI(); // updates top badge
+          renderAvailableVouchers(); // re-evaluates buttons
+          renderMyVouchers();
+        } else {
+          showToast(result.message, 'error');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

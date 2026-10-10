@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deposit | EcoCycle Campus</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="kiosks">
+  <div class="app-container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          EcoCycle
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <!-- Minimal nav since this is a flow -->
+        <a href="dashboard.html" class="nav-item">Cancel Deposit</a>
+      </nav>
+    </aside>
+
+    <div class="app-content">
+      <header class="top-header">
+        <h1 class="header-title">E-Waste Deposit</h1>
+        <div class="header-actions">
+          <a href="dashboard.html" class="btn btn-outline text-sm">Cancel</a>
+        </div>
+      </header>
+
+      <main class="main-content" style="max-width: 600px;">
+        
+        <!-- Step 1: Unlocking -->
+        <div id="step-unlocking" class="card text-center py-8">
+          <div class="spinner mb-6"></div>
+          <h3>Unlocking Bin securely...</h3>
+          <p>Please wait while we establish a secure connection with Kiosk <span id="kiosk-id-display" class="font-bold"></span>.</p>
+        </div>
+
+        <!-- Step 2: Select Category -->
+        <div id="step-select" class="card" style="display: none;">
+          <h3 class="mb-4">Select Device Type</h3>
+          <p class="mb-6 text-sm">The bin is open. What are you depositing today? Please ensure batteries are not swollen or damaged.</p>
+          
+          <div class="grid grid-2 mb-6" id="category-grid">
+            <!-- Populated via JS -->
+          </div>
+          
+          <div style="background: #FEF2F2; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid #FEE2E2;" class="mb-6 text-sm text-danger flex items-center gap-2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <p style="margin:0; color: inherit;">Safety Notice: Do not deposit leaking batteries, shattered glass, or highly hazardous materials.</p>
+          </div>
+
+          <button id="btn-proceed" class="btn btn-primary" style="width: 100%;" disabled>Proceed to Verify</button>
+        </div>
+
+        <!-- Step 3: Verifying -->
+        <div id="step-verifying" class="card text-center py-8" style="display: none;">
+          <div class="spinner mb-6"></div>
+          <h3>Verifying Deposit...</h3>
+          <p>The internal sensors are weighing and scanning your device. Please wait.</p>
+        </div>
+
+        <!-- Step 4: Success Receipt -->
+        <div id="step-success" class="card text-center" style="display: none; padding: 3rem 2rem;">
+          <div style="background: var(--mint-green); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--forest-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <h2 class="mb-2">Deposit Successful!</h2>
+          <p class="mb-6">Thank you for recycling responsibly.</p>
+          
+          <div style="background: var(--warm-white); border-radius: var(--radius-md); padding: 1.5rem; text-align: left; border: 1px solid var(--border-color);" class="mb-6">
+            <div class="flex justify-between mb-2">
+              <span class="text-muted">Transaction ID:</span>
+              <span class="font-bold" id="receipt-tx">---</span>
+            </div>
+            <div class="flex justify-between mb-2">
+              <span class="text-muted">Kiosk:</span>
+              <span class="font-bold" id="receipt-kiosk">---</span>
+            </div>
+            <div class="flex justify-between mb-2">
+              <span class="text-muted">Item:</span>
+              <span class="font-bold" id="receipt-item">---</span>
+            </div>
+            <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 1rem 0;">
+            <div class="flex justify-between">
+              <span class="text-muted font-bold">Points Earned:</span>
+              <span class="text-success font-bold" style="font-size: 1.25rem;" id="receipt-points">+0</span>
+            </div>
+          </div>
+
+          <a href="dashboard.html" class="btn btn-primary" style="width: 100%;">Return to Dashboard</a>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let flowState = null;
+    let selectedCategory = null;
+    let transactionCompleted = false;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const rawFlow = localStorage.getItem('ecocycle_kiosk_flow');
+      if (!rawFlow) {
+        window.location.href = 'kiosks.html';
+        return;
+      }
+      flowState = JSON.parse(rawFlow);
+      document.getElementById('kiosk-id-display').textContent = flowState.kioskId;
+
+      // Simulate bin unlocking delay
+      setTimeout(() => {
+        document.getElementById('step-unlocking').style.display = 'none';
+        showSelectStep();
+      }, 2000);
+    });
+
+    function showSelectStep() {
+      document.getElementById('step-select').style.display = 'block';
+      const grid = document.getElementById('category-grid');
+      
+      DEVICE_CATEGORIES.forEach(cat => {
+        const div = document.createElement('div');
+        div.className = 'card cursor-pointer';
+        div.style.padding = '1rem';
+        div.style.cursor = 'pointer';
+        div.style.border = '2px solid var(--border-color)';
+        div.style.transition = 'var(--transition)';
+        div.innerHTML = `
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold">${cat.name}</span>
+          </div>
+          <p class="text-sm text-success font-bold">+${cat.points} pts</p>
+        `;
+        
+        div.onclick = () => {
+          // Deselect all
+          Array.from(grid.children).forEach(child => child.style.borderColor = 'var(--border-color)');
+          // Select this
+          div.style.borderColor = 'var(--forest-green)';
+          selectedCategory = cat;
+          document.getElementById('btn-proceed').disabled = false;
+        };
+        grid.appendChild(div);
+      });
+
+      document.getElementById('btn-proceed').onclick = () => {
+        if (!selectedCategory || transactionCompleted) return;
+        document.getElementById('step-select').style.display = 'none';
+        document.getElementById('step-verifying').style.display = 'block';
+        
+        // Simulate verification logic
+        setTimeout(() => {
+          completeDeposit();
+        }, 2500);
+      };
+    }
+
+    function completeDeposit() {
+      if (transactionCompleted) return; // Prevent duplicate
+      transactionCompleted = true;
+
+      const tx = store.addDepositTransaction(selectedCategory.id, flowState.kioskId, selectedCategory.points);
+      
+      // Cleanup flow state
+      localStorage.removeItem('ecocycle_kiosk_flow');
+
+      // Show success
+      document.getElementById('step-verifying').style.display = 'none';
+      document.getElementById('step-success').style.display = 'block';
+      
+      document.getElementById('receipt-tx').textContent = tx.id;
+      document.getElementById('receipt-kiosk').textContent = tx.kioskId;
+      document.getElementById('receipt-item').textContent = selectedCategory.name;
+      document.getElementById('receipt-points').textContent = `+${tx.points}`;
+      
+      // Prevent back navigation from recreating the transaction
+      history.pushState(null, '', 'dashboard.html');
+    }
+  </script>
+</body>
+</html>
